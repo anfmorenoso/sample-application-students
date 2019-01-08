@@ -22,6 +22,8 @@ cache:
 env:
   global:
     - secure: "oe3IVzeNg+cFvd8IW3SlzhNPDsK5ZKD28Fl3zoMXqCvcqXdE0bdUDLfPEYLrQ12VTYtOgoJDG9qCWSIEWHiQRDlZSBe+29mLHjBPQENojxBIABU97zAZTNAgU6lca5e9zTD8w0tK8NjrnN7PMLkxvNFRudXk0KcobU54CnLQUtK41D9KuIwpBTsB2uo4IW8K860zBeLj+Lxgd82pIOEkUCRQU8S7pJCj6N7CYl5z4H5fjj+3V+eddBYSnoZKoGHLTV3RjBhXjpH3WlOymxf9z1ZobcJEpiNnsE1492SKhkaF0AlQAKQarB1jD4zsGINBHgDE7ssFTvStrMUvG4IQg5byXgpFfwEUOkac61sRUQbDkaDHtt1MBUXL6pbYUAQTFhpj0T4fFpsjDRnm4LbhDlZxzAu0E7nJ6+m4W4IihaFdCh2OPuI7iDGY5UcjFnZvtVjl1+vs3GrB6FepUmc+d0hAQ7GJrFXgoixzwRa+f+GXNiTuC9O6lEpdZlZiU2/WRnGzo81aR+A7iNk2GTktalZx3rDjqa7In0slKtkOFw65SDgQ073ECQFbXhFIKysE02Gy16CE1/XUm2y8enGiqDUdVrIRSrfNlspMKoDk7Ha5BQX/wSOqsbQGOJZoyCR5jFlKnteN/TPkRxghuoSbNIshPXePDUQQo9RTQFkJXLY="
+    - secure: "XWb94OYFb4Qep4YTIa5eB27dLwa2FyCQWXYZNGTMxp1s254iOFvh/kS6UoVcIhyvUopWkzHIqZu0cU0rVdxik2MOMnJ39UamuYXQbCSFetRyIisL88HNxJ02xyPg+eMN6TuYmvgR/6qXhG9fnWX3yd6SNvzNfu21rQKvY7Z2dsYVZ7YVWlidz10C7Atg7s1vnwEcyfzDny36oyG6HgvC/Pay2GLq862GDu7mg81WMg6G1o+BygdxCmL1MHbneodOR+45u6d/O+ffTgjiVDcd4y7ORtVuTkikJLcG33dS41RlbjaQ1MNJentapgxKsS97pf00C1vEl1nCXkiOMLYzxmszYLgqm5wnL1QgZhSkvLDhhK1S7RzaxY4Dxqt+9/BYbwvKtBJN5e1R5yS6kQrzCNAsQz/d72GEG5iHj3sojRkLxZUbmDeqMKWr/hr/sckjCYFaAAHpPAu5laRHnYPau6tnbBRksoJTf1OCq7JkWZPlACjA8MAdWz8GdOBGmJ0D1GIkrlGBgMw46cM9BuOctmRq5rUdA2E+U61FUkwwO2UtRdNiOZt0FMs4iWSg20c4gIP2Tu3/RD+BOwtLk1cVxVkq+4+lGqWKYMOG6+PmoJeaxXBqIC/+CJ2er9ee4LlB3WgLUmGW1JAOHyfBw40MDNsq4WLTVgWtT6FxyxJDp/Y="
+    - secure: "Qvj3tLfo+4b3rNwoM4yzvM+HqnRgVWSQlr4YGnh+5MJQmk0XawqI2JzAOCqjm59R5V3ZovRbVFoPzRAwhwZtUiD/ssfTcYJV4k7qpawxX8RIFeH9PfDnTRGCKs9ghMcQ4siJOX2U771+UCQ6KoM8RQZ2AYxnJVQsxRBEs52ylYx/sJL/8aSusev/tHQ0bhq1TqjZgfr70+G0ZVkNThaNFnMUJtMyX4ahULrg04TvYKQMSXVd1bZEGRV2T68G2QtdBAPtzBltbecaQKoBKps12CnI75f73pSUeEcE22I3uPgvoYALQuVeeUeVSJMNIZsOPCwkfn5gT6IW6yi13yUPGlYCbeXNMj8TvZe17cVAKbGmFkv/FKLY+J2/lLxKpmblOsMrp7Z5qkS9sPLRzLWGI85a9Eau7ILi5v5LyVAvv+8+L63AZLg/YLK4LijrKNbVwm7B+NT0F8k3l/lQp6yb4+ZezB8Qkm40veOqYyOlomyVaYeiD/XEVBFW4J4jj+rMDYF6PJqhx626kkqqvkhlCRN5DK8OF4iXmOkJDRdO4tO6RUNv+lAvNCNvmaUJNzxUR3oAUvgS+qx48WLDcjIzPJjlLsZY9NhblUX3FgXGyczNudJxfqLTm52+7ydDhKEKzn1Wp4oVT0PWQGIXkJrSyV4/L/Y+QaGcQz2FAuatRcU="
 
 # The pipe (|) is useful to create multiline scripts
 script:
@@ -31,3 +33,15 @@ script:
     -Dsonar.organization=anfmorenoso-github \
     -Dsonar.host.url=https://sonarcloud.io \
     -Dsonar.login=$SONAR_TOKEN
+  # Login to Docker hub
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  # Tag text according to the branch
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+  # Image name
+  - export IMAGE_NAME=takimatraining/sample-application
+  # Build the image (see Dockerfile) and tag it with the commit ID
+  - docker build -t $IMAGE_NAME:$TRAVIS_COMMIT .
+  # Retag the image with the previously choosen tag
+  - docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:$TAG
+  # Push the tagged image to Docker Hub
+  - docker push $IMAGE_NAME:$TAG
