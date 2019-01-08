@@ -21,13 +21,13 @@ cache:
 
 env:
   global:
-    - secure: "mYMfjMebcBXS6myAg+C/EZi9sIw1QJKW5WjJqjQDpo++eGOJJkDC7gqkyiwLzBlDt8Vl0EjoC8pCQBzO5X7QV+v+pPmO4Nli6C6CngmYkBp/qORctmrqQpTgBcGZNTVqiOA0AeDCzK9QQZaZ8n/im7prh+v5EuA5BRtOmzHbHH1drF0f1J22oUdNk5OgnAmcVGI7hx5lDZCAIUXST5Gd/n3shU5H6Ts45p0zzSWL8zh7Nx7o+shK3fonIVhb+vZhor2Hl0Z600eQJv0qmw4ZAser022HJCIglSV47aZKECz3UIgaOmu/HBcgEPDAUohGxOtAsoUB603EIBKsalCqWj6hDthY9t/7OOjB7EmoerlZwWQI6PVMAYnLAcgWBcOWxClKqHuBGMrv/ybvttyjdIZN/yxw3Bzz1KSMKzmdLhKf//OZGgvu+CUQb3NDcbIzfdWgmVJyU59YTZkA6RCP1l02hYYlFZ0HhtH38+X9ODfWX2eYjkf0n/WLAOcWJByO8fajBvezMwlYntGRxWsBviM5WL5m+hnbH8X16WWt4l0h+kRBntqJcqvrne4BLpq69n+6y11r9G9Fot5I6ds31hS5B3rp//AbsGPMoaFya2zfk7e0JenwNEe5nMX17oEJy/uAwMveb7/2ktBpwzFXk9Nkq1dJedSVkz1n3ot11QU="
+    - secure: "oe3IVzeNg+cFvd8IW3SlzhNPDsK5ZKD28Fl3zoMXqCvcqXdE0bdUDLfPEYLrQ12VTYtOgoJDG9qCWSIEWHiQRDlZSBe+29mLHjBPQENojxBIABU97zAZTNAgU6lca5e9zTD8w0tK8NjrnN7PMLkxvNFRudXk0KcobU54CnLQUtK41D9KuIwpBTsB2uo4IW8K860zBeLj+Lxgd82pIOEkUCRQU8S7pJCj6N7CYl5z4H5fjj+3V+eddBYSnoZKoGHLTV3RjBhXjpH3WlOymxf9z1ZobcJEpiNnsE1492SKhkaF0AlQAKQarB1jD4zsGINBHgDE7ssFTvStrMUvG4IQg5byXgpFfwEUOkac61sRUQbDkaDHtt1MBUXL6pbYUAQTFhpj0T4fFpsjDRnm4LbhDlZxzAu0E7nJ6+m4W4IihaFdCh2OPuI7iDGY5UcjFnZvtVjl1+vs3GrB6FepUmc+d0hAQ7GJrFXgoixzwRa+f+GXNiTuC9O6lEpdZlZiU2/WRnGzo81aR+A7iNk2GTktalZx3rDjqa7In0slKtkOFw65SDgQ073ECQFbXhFIKysE02Gy16CE1/XUm2y8enGiqDUdVrIRSrfNlspMKoDk7Ha5BQX/wSOqsbQGOJZoyCR5jFlKnteN/TPkRxghuoSbNIshPXePDUQQo9RTQFkJXLY="
 
 # The pipe (|) is useful to create multiline scripts
 script:
   - |
     mvn clean install sonar:sonar \
-    -Dsonar.projectKey=<SONAR_PROJECT_KEY> \
-    -Dsonar.organization=<SONAR_ORGANISATION_KEY> \
+    -Dsonar.projectKey=anfmorenoso_sample-application-students \
+    -Dsonar.organization=anfmorenoso-github \
     -Dsonar.host.url=https://sonarcloud.io \
     -Dsonar.login=$SONAR_TOKEN
